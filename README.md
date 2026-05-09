@@ -96,18 +96,48 @@ pip install pandas numpy matplotlib seaborn scikit-learn jupyter ipykernel
 
 ---
 
-## Resultados
+## Modelo e Resultados
 
-> Em desenvolvimento. Modelo de classificação e métricas de avaliação serão adicionados ao final do projeto.
+**Algoritmo:** Random Forest Classifier (100 árvores, class_weight=balanced)
+
+**Divisão dos dados:** 80% treino / 20% teste com estratificação
+
+### Métricas no conjunto de teste
+
+| Métrica | Sem Falha | Com Falha |
+|---|---|---|
+| Precision | 99% | 96% |
+| Recall | 100% | 66% |
+| F1-Score | 99% | 78% |
+| Acurácia geral | 99% | |
+
+### Importância das features
+
+| Ranking | Feature | Origem |
+|---|---|---|
+| 1 | Torque [Nm] | Original |
+| 2 | Rotational speed [rpm] | Original |
+| 3 | power | Feature de engenharia |
+| 4 | Tool wear [min] | Original |
+| 5 | temp_diff | Feature de engenharia |
+| 6 | Air temperature [K] | Original |
+| 7 | Process temperature [K] | Original |
+| 8 | Type | Original |
+
+### Interpretação dos resultados
+
+- Variáveis mecânicas (torque e rotação) dominam a previsão de falhas
+- A feature de engenharia `power` superou variáveis originais do dataset, validando o uso de conhecimento de domínio na construção do modelo
+- O Recall de 66% indica que o modelo detecta 2 em cada 3 falhas reais, resultado relevante considerando que nenhuma técnica de balanceamento foi aplicada
 
 ---
 
 ## Próximos Passos
 
-- Treinar e avaliar modelos de classificação (Random Forest, XGBoost)
-- Avaliar desempenho com Recall e F1-Score devido ao desbalanceamento
-- Implementar técnicas de balanceamento de classes (SMOTE)
+- Aplicar técnicas de balanceamento de classes (SMOTE) para melhorar o Recall
+- Testar outros algoritmos (XGBoost, LightGBM)
 - Interpretar o modelo com SHAP values
+- Desenvolver pipeline de predição em produção
 
 ---
 
